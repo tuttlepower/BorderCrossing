@@ -60,21 +60,9 @@
                 fillOpacity: 0.5,
                 radius: 200,
                 interactive: false,
-            }),
-            circle1 = L.circle([40, -83], {
-                color: 'blue',
-                fillColor: 'blue',
-                fillOpacity: 0.5,
-                radius: 700,
-                interactive: false,
-            }),
-            // tests pulling additional OSU data
-            trash = L.esri.featureLayer({
-                url: 'https://gismaps.osu.edu/arcgis/rest/services/AGOL/BasemapAsFeatures/MapServer/31'
-
             });
         //groups shapes into same layer    
-        var shapeTest = L.layerGroup([circle, circle1, trash]);
+        var shapeTest = L.layerGroup([circle]);
        
 
         //binds popups to the buildings layer
