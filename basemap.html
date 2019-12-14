@@ -29,7 +29,7 @@
     <script src="https://unpkg.com/esri-leaflet-geocoder@2.2.14/dist/esri-leaflet-geocoder.js"
         integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
         crossorigin=""></script>
-    <script type="text/javascript" src="BorderDataJs.js"></script>
+    <script type="text/javascript" src="FixedBorderJson.js"></script>
 
 
     <style>
@@ -54,16 +54,19 @@
 
     <script>
         //testing layers with shapes 
-        var circle = L.circle([32.67524,-115.48433000000001], {
+        var circle = new Array();
+        for (var i = 0; i < 100; i++) {
+            circle[i] = L.circle([border[i].Latitude, border[i].Longitude], {
                 color: 'red',
                 fillColor: '#f03',
                 fillOpacity: 0.5,
                 radius: 200,
                 interactive: false,
             });
+        }
         //groups shapes into same layer    
-        var shapeTest = L.layerGroup([circle]);
-       
+        var shapeTest = L.layerGroup([circle[1,2,3,4]]);
+
 
         //binds popups to the buildings layer
 
@@ -93,7 +96,7 @@
         var overlays = {
             //"buildings": buildings,
             "Test": Test,
-            "shapes":shapeTest
+            "shapes": shapeTest
         };
 
         //inserts layers to map

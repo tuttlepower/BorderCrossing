@@ -2,15 +2,14 @@
 <html>
 
 <body>
-
-    <h2>JavaScript in Body</h2>
-
     <h1 id="hello"></h1>
-    <script type="text/javascript" src="test.js"></script>
+    <script type="text/javascript" src="FixedBorderJson.js"></script>
     <script>
         for (var i = 0; i < 100; i++) {
-            var comma = test[i].Location.split(" ")
-            document.getElementById("hello").innerHTML = comma;
+            var latitude = border[i].Latitude
+            var longitude = border[i].Longitude
+
+            document.getElementById("hello").innerHTML += '<br>' + latitude + ', '+ longitude;
         }
     </script>
 
