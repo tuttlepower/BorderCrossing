@@ -30,58 +30,42 @@
         integrity="sha512-uK5jVwR81KVTGe8KpJa1QIN4n60TsSV8+DPbL5wWlYQvb0/nYNgSOg9dZG6ViQhwx/gaMszuWllTemL+K+IXjg=="
         crossorigin=""></script>
     <script type="text/javascript" src="BorderDataJs.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!-- needed for clustering-->
+    <link rel="stylesheet" href="screen.css" />
+    <link rel="stylesheet" href="dist\MarkerCluster.css" />
+    <link rel="stylesheet" href="dist\MarkerCluster.Default.css" />
+    <script src="dist\leaflet.markercluster-src.js"></script>
+    <script src="dist\leaflet.markercluster.js"></script>
 
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-        }
-
-        #map {
-            position: absolute;
-            top: 0;
-            bottom: 0;
-            right: 0;
-            left: 0;
-        }
-    </style>
+    <!-- Border Data -->
+    <script src="FixedBorderJson.js"></script>
 </head>
 
 <body>
-
     <div id="map"></div>
-
     <script>
-        //testing layers with shapes 
-        var circle = L.circle([40.000823481406954, -83.02537039514612], {
-                color: 'red',
-                fillColor: '#f03',
-                fillOpacity: 0.5,
-                radius: 200,
-                interactive: false,
-            }),
-            circle1 = L.circle([40, -83], {
-                color: 'blue',
-                fillColor: 'blue',
-                fillOpacity: 0.5,
-                radius: 700,
-                interactive: false,
+        var markers = L.markerClusterGroup();
+        for (var i = 0; i < border.length; i++) {
+            var a = border[i];
+            var title = border[i].Measure;
+            var marker = L.circle(new L.LatLng(border[i].Latitude, border[i].Longitude), {
+                title: title
             });
-            
-        //groups shapes into same layer    
-        var shapeTest = L.layerGroup([circle, circle1]);
-
+            marker.bindPopup(title);
+            markers.addLayer(marker);
+        }
         //uses esri basemaplayers to get a light theme and streets
         var grayscale = L.esri.basemapLayer('Gray'),
-            nationalGeographic = L.esri.basemapLayer('NationalGeographic')
+            nationalGeographic = L.esri.basemapLayer('NationalGeographic'),
         darkmode = L.esri.basemapLayer('DarkGray');
 
         //creates map and sets the view to OSU
         var map = L.map('map', {
             center: [38.2700, -100.8603],
             zoom: 4,
-            layers: [darkmode, shapeTest]
+            layers: [darkmode, markers]
         });
 
         //gives different basemap options
@@ -93,7 +77,7 @@
 
         //different layers can be placed here, allowing them to be seen and hidden 
         var overlays = {
-            "Test": shapeTest,
+            "Markers": markers
         };
 
         //inserts layers to map
