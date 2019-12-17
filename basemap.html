@@ -2,61 +2,60 @@
 <html>
 
 <head>
-	<title>Border Crossings</title>
-	<!-- Inserts lightning to nav bar -->
-	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-	<link rel="shortcut icon" type="image/x-icon"
-		href="https://raw.githubusercontent.com/tuttlepower/tuttlepower/master/Resources/Images/facelighting.png" />
+    <title>Border Crossings</title>
+    <!-- Inserts lightning to nav bar -->
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://raw.githubusercontent.com/tuttlepower/tuttlepower/master/Resources/Images/facelighting.png" />
 
-	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
-		integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
-		crossorigin="" />
-	<script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"
-		integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA=="
-		crossorigin=""></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css"
+        integrity="sha512-07I2e+7D8p6he1SIM+1twR5TIrhUQn9+I6yjqD53JQjFiMf8EtC93ty0/5vJTZGF8aAocvHYNEDJajGdNx1IsQ=="
+        crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet-src.js"
+        integrity="sha512-WXoSHqw/t26DszhdMhOXOkI7qCiv5QWXhH9R7CgvgZMHz1ImlkVQ3uNsiQKu5wwbbxtPzFXd1hK4tzno2VqhpA=="
+        crossorigin=""></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-	<link rel="stylesheet" href="screen.css" />
-	<link rel="stylesheet" href="dist\MarkerCluster.css" />
-	<link rel="stylesheet" href="dist\MarkerCluster.Default.css" />
-	<script src="dist\leaflet.markercluster-src.js"></script>
-	<script src="dist\leaflet.markercluster.js"></script>
-	<script src="FixedBorderJson.js"></script>
+    <link rel="stylesheet" href="screen.css" />
+    <link rel="stylesheet" href="dist\MarkerCluster.css" />
+    <link rel="stylesheet" href="dist\MarkerCluster.Default.css" />
+    <script src="dist\leaflet.markercluster-src.js"></script>
+    <script src="dist\leaflet.markercluster.js"></script>
+    <script src="FixedBorderJson.js"></script>
 
 
 </head>
 
 <body>
 
-	<div id="map"></div>
+    <div id="map"></div>
     <script type="text/javascript">
-    var markers = L.markerClusterGroup();
+        //var markers = L.markerClusterGroup();
+        var markers = L.heatLayer().addTo(map);
 
-for (var i = 0; i < border.length; i++) {
-    var a = border[i];
-    var title = border[i].Measure;
-    var marker = L.circle(new L.LatLng(border[i].Latitude, border[i].Longitude), {
-        title: title
-    });
-    marker.bindPopup(title);
-    markers.addLayer(marker);
-}
+        for (var i = 0; i < border.length; i++) {
+            var a = border[i];
+            var title = border[i].Measure;
+            var marker = L.circle(new L.LatLng(border[i].Latitude, border[i].Longitude), {
+                title: title
+            });
+            marker.bindPopup(title);
+            markers.addLayer(marker);
+        }
 
-map.addLayer(markers);
-		var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-				maxZoom: 18,
-				attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
-			}),
-			latlng = L.latLng(38.2700, -100.8603);
+        ;
+        var tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+            }),
+            latlng = L.latLng(38.2700, -100.8603);
 
-		var map = L.map('map', {
-			center: latlng,
-			zoom: 4,
-			layers: [tiles]
-		});
-
-		
-	</script>
+        var map = L.map('map', {
+            center: latlng,
+            zoom: 4,
+            layers: [tiles, markers]
+        });
+    </script>
 </body>
 
 </html>
